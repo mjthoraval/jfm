@@ -1,3 +1,7 @@
+% Modifications from Marie-Jean Thoraval (mjthoraval@gmail.com)
+% Version: 8th February 2018
+% Run in TeXnicCenter with option LaTeX => DVI => PDF
+%
 % This is file JFM2esam.tex
 % first release v1.0, 20th October 1996
 %       release v1.01, 29th October 1996
@@ -9,7 +13,19 @@
 
 \documentclass{jfm}
 \usepackage{graphicx}
+% Modifications
+% Remove ``[warnundef]'' to get rid of undefined abbreviation warnings:
+\usepackage[warnundef]{jabbrv} % Use jfm_jabbrv.bst in \bibliographystyle instead of jfm.bst
+\graphicspath{{Figures/}} % To store figures in a subfolder to be more clear
 \usepackage{epstopdf, epsfig}
+\usepackage{siunitx} % https://www.dpg-physik.de/dpg/gliederung/junge/rg/wuerzburg/Archiv/WS%202011-12/LaTeX/siunitx.pdf
+\usepackage[breaklinks=true,dvipdfm,colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue,hypertexnames=false]{hyperref}
+\usepackage[all]{hypcap} % To get links to figures and not its caption
+\usepackage{dcolumn}   % Aligning columns on a decimal point
+\usepackage{latexsym}
+\usepackage[utf8]{inputenc} % For French characters
+\usepackage[T1]{fontenc} % For French characters
+\usepackage{comment} % To comment some large sections
 
 \newtheorem{lemma}{Lemma}
 \newtheorem{corollary}{Corollary}
@@ -34,12 +50,38 @@ Camford, Academic Street, Camford CF3 5QL, UK}
 \maketitle
 
 \begin{abstract}
-This file contains instructions for authors planning to submit a paper to the {\it Journal of Fluid Mechanics}. These instructions were generated in {\LaTeX} using the JFM style, so the {\LaTeX} source file can be used as a template for submissions. The present paragraph appears in the \verb}abstract} environment. All papers should feature a single-paragraph abstract of no more than 250 words, which provides a summary of the main aims and results. 
+This file contains instructions for authors planning to submit a paper to the {\it Journal of Fluid Mechanics}. These instructions were generated in {\LaTeX} using the JFM style, so the {\LaTeX} source file can be used as a template for submissions. The present paragraph appears in the \verb|abstract| environment. All papers should feature a single-paragraph abstract of no more than 250 words, which provides a summary of the main aims and results.
 \end{abstract}
 
 \begin{keywords}
 Authors should not enter keywords on the manuscript, as these must be chosen by the author during the online submission process and will then be added during the typesetting process (see http://journals.cambridge.org/data/\linebreak[3]relatedlink/jfm-\linebreak[3]keywords.pdf for the full list)
 \end{keywords}
+
+\section{Modifications}
+
+This version of the guidelines contains the following additions and bug fixes,
+mostly in the new BibTeX style file \verb|jfm_jabbrv.bst|:
+\begin{itemize}
+	\item Abbreviation of journal titles with the package \verb|jabbrv|.
+	The BibTeX file must be updated to be compatible with this package.
+	This option can be disabled by commenting the package, and changing the
+	BibTeX style file \verb|jfm_jabbrv.bst| according to the instructions of that package.
+	% https://github.com/compholio/jabbrv.
+	% http://www.compholio.com/latex/jabbrv/
+	% https://tex.stackexchange.com/questions/33441/how-to-abbreviate-journal-name-in-citation
+	\item Replace the first name of authors in the References with their first name initials.
+	% https://tex.stackexchange.com/questions/131087/displaying-authors-name-in-a-bibliographic-entry-in-the-form-surname-first-in
+	\item Replace with \textit{et al.} if more than 10 authors, according to the recommendations in these guidelines.
+	% https://tex.stackexchange.com/questions/26575/bibtex-how-can-i-automatically-reduce-long-author-lists-to-xxx-et-al
+	\item Fixed the case of ``others'' used in authors list, by adding \verb|\au{others}|.
+	% Compare with original unsrt.bst: http://ftp.cs.stanford.edu/tex/bibtex/unsrt.bst
+	% https://www.diffchecker.com or https://text-compare.com/
+	\item Do not add arXiv if the paper is published: \verb|FUNCTION {format.eprint}|.
+	\item Removed empty ', ,' when empty series for \verb|FUNCTION {format.bvolume}|.
+	\item Added the package \verb|hyperref| to link references.
+\end{itemize}
+
+Test of a BibTeX entry copied from Mendeley with special characters \citep{Thoraval2012}.
 
 \section{How to submit to the \textbf{\textit{Journal of Fluid Mechanics}}}
 Authors must submit using the online submission and peer review system, Scholar One Manuscripts (formerly Manuscript Central) at http://mc.manuscriptcentral.com/jfm. If visiting the site for the first time, users must create a new account by clicking on `register here'. Once logged in, authors should click on the `Corresponding Author Centre', from which point a new manuscript can be submitted, with step-by-step instructions provided. Authors must at this stage specify whether the submission is a standard paper, or a {\it JFM Rapids} paper (see \S\ref{sec:filetypes} for more details). In addition, authors must specify an editor to whom the paper will be submitted from the drop-down list provided. Note that all editors exclusively deal with either standard papers or {\it JFM Rapids} (clearly indicated on the list), so please ensure that you choose an editor accordingly. Corresponding authors must provide a valid ORCID ID in order to submit a manuscript, either by linking an existing ORCID profile to your ScholarOne account or by creating a new ORCID profile. Once your submission is completed you will receive an email confirmation.  Book reviews should not be submitted via the online submission site and should instead be submitted by email to c.p.caulfield@damtp.cam.ac.uk.
@@ -140,18 +182,18 @@ Generally any queries concerning notation and journal style can be answered by v
 
 \subsection{Mathematical notation}
 \subsubsection{Setting variables, functions, vectors, matrices etc}
-{\bf Italic font} should be used for denoting variables, with multiple-letter symbols avoided except in the case of dimensionless numbers such as $\Rey$, $\Pran$ and $\Pen$ (Reynolds, Prandtl, and P\'eclet numbers respectively, which are defined as \verb}\Rey}, \verb}\Pran} and {\verb}\Pen} in the template).\\
+{\bf Italic font} should be used for denoting variables, with multiple-letter symbols avoided except in the case of dimensionless numbers such as $\Rey$, $\Pran$ and $\Pen$ (Reynolds, Prandtl, and P\'eclet numbers respectively, which are defined as \verb|\Rey|, \verb|\Pran| and \verb|\Pen| in the template).\\
 {\bf Upright Roman font} (or upright Greek where appropriate) should be used for:\\
 Operators: sin, log, d, $\Delta$, e etc.\\
-Constants: i ($\sqrt{-1}$), $\upi$ (defined as \verb}\upi}), etc.\\
-Functions: $\Ai$, $\Bi$ (Airy functions, defined as \verb}\Ai} and \verb}\Bi}), $\Real$ (real part, defined as \verb}\Real}), $\Imag$ (imaginary part, defined as \verb}\Imag}), etc.\\
+Constants: i ($\sqrt{-1}$), $\upi$ (defined as \verb|\upi|), etc.\\
+Functions: $\Ai$, $\Bi$ (Airy functions, defined as \verb|\Ai| and \verb|\Bi|), $\Real$ (real part, defined as \verb|\Real|), $\Imag$ (imaginary part, defined as \verb|\Imag|), etc.\\
 Physical units: cm, s, etc\\
 Abbreviations: c.c. (complex conjugate), h.o.t. (higher-order terms), DNS, etc.\\
 {\bf Bold italic font} (or bold sloping Greek) should be used for:\\
 Vectors (with the centred dot for a scalar product also in bold): $\boldsymbol{i \cdot j}$\\
-{\bf Bold sloping sans serif font}, defined by the \verb}\mathsfbi} macro, should be used for:\\
+{\bf Bold sloping sans serif font}, defined by the \verb|\mathsfbi| macro, should be used for:\\
 Tensors and matrices: $\mathsfbi{D}$ \\
-{\bf Script font} (for example $\mathcal{G}$, $\mathcal{R}$) can be used as an alternative to italic when the same letter denotes a different quantity (use \verb}\mathcal} in \LaTeX)\\
+{\bf Script font} (for example $\mathcal{G}$, $\mathcal{R}$) can be used as an alternative to italic when the same letter denotes a different quantity (use \verb|\mathcal| in \LaTeX)\\
 The product symbol ($\times$) should only be used to denote multiplication where an equation is broken over more than one line, to denote a cross product, or between numbers (the $\cdot$ symbol should not be used, except to denote a scalar product specifically).\\ 
 
 \subsubsection{Other symbols}
@@ -161,7 +203,7 @@ form 1600 or 16 000 or 160 000.
 Use \textit{O} to denote `of the order of', not the \LaTeX\ $\mathcal{O}$.
 
 \section{Citations and references}
-All papers included in the References section must be cited in the article, and vice versa. Citations should be included as, for example ``It has been shown \citep{Rogallo81} that...'' (using the {\verb}\citep} command, part of the natbib package) ``recent work by \citet{Dennis85}...'' (using {\verb}\citet}).
+All papers included in the References section must be cited in the article, and vice versa. Citations should be included as, for example ``It has been shown \citep{Rogallo81} that...'' (using the \verb|\citep| command, part of the natbib package) ``recent work by \citet{Dennis85}...'' (using \verb|\citet|).
 The natbib package can be used to generate citation variations, as shown below.\\
 \verb#\citet[pp. 2-4]{Hwang70}#:\\
 \citet[pp. 2-4]{Hwang70} \\
@@ -398,7 +440,8 @@ $f(0)=f(1)=0$ always satisfies
 \end{equation}
 \end{corollary}
 
-\bibliographystyle{jfm}
+%\bibliographystyle{jfm} % Original bibliograhy style
+\bibliographystyle{jfm_jabbrv} % Bibliography style to use abbreviated journal titles
 % Note the spaces between the initials
 \bibliography{jfm-instructions}
 

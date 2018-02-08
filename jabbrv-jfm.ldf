@@ -1,0 +1,69 @@
+%% Copyright 2018 Marie-Jean THORAVAL
+%% E-mail: mjthoraval@gmail.com
+%% 
+%% =============================================
+%% IMPORTANT NOTICE:
+%% 
+%% This work may be distributed and/or modified under the conditions
+%% of the LaTeX Project Public License, either version 1.3c of this
+%% license or (at your option) any later version.
+%% The latest version of this license is available at
+%%   http://www.latex-project.org/lppl.txt
+%% =============================================
+
+% Add here to prevent the warning of non-abbreviated journal title words, or for custom abbreviations
+% Data from one of the two sources:
+% JCR: http://webofknowledge.com/JCR/
+% NLM Catalog: https://www.ncbi.nlm.nih.gov/nlmcatalog
+
+\DefineJournalException{Nonlinearity}{Nonlinearity}
+\DefineJournalException{Physics of Fluids}{Phys. Fluids}
+\DefineJournalException{Physical Review E}{Phys. Rev. E}
+\DefineJournalException{Physical Review Letters}{Phys. Rev. Lett.}
+\DefineJournalException{Phys. Rev. Lett.}{Phys. Rev. Lett.}
+\DefineJournalException{IEEE Transactions on Electron Devices}{IEEE Trans. Electron Devices}
+\DefineJournalException{IMA Journal of Applied Mathematics}{IMA J. Appl. Math.}
+\DefineJournalException{Europhysics Letters (EPL)}{Europhys. Lett. (EPL)} % Intermediate name
+\DefineJournalException{EPL}{EPL} % New name since 2007
+\DefineJournalException{Europhysics Letters}{Europhys. Lett.} % Old name until 2006
+\DefineJournalException{Annual Review of Fluid Mechanics}{Annu. Rev. Fluid Mech.}
+
+% Special characters from JFM instructions LaTeX files: '~' and '\' are not compatible
+% with jabbrv package. They must be defined manually here is necessary
+% Fixed to ISO journal title abbreviations. The original format put in comment before:
+% J.~Fluid Mech.
+\DefineJournalException{Journal of Fluid Mechanics}{J.~Fluid Mech.}
+\DefineJournalException{J. Fluid Mech.}{J.~Fluid Mech.}
+% J.~Sound Vib.
+\DefineJournalException{Journal of Sound and Vibration}{J.~Sound Vib.}
+\DefineJournalException{J. Sound Vib.}{J.~Sound Vib.}
+% Phil.\ Trans.\ R. Soc.\ Lond.
+\DefineJournalException{Philosophical Transactions of the Royal Society of London. A}{Philos.\ Trans.\ R. Soc.\ Lond. A}
+\DefineJournalException{Philos. Trans. R. Soc. Lond. A}{Phil.\ Trans.\ R. Soc.\ Lond. A}
+% Q.~J. Mech.\ Appl.\ Maths
+\DefineJournalException{The Quarterly Journal of Mechanics and Applied Mathematics}{Q.~J. Mech.\ Appl.\ Math.}
+\DefineJournalException{Q. J. Mech. Appl. Math.}{Q.~J. Mech.\ Appl.\ Math.}
+% NASA Tech.\ Mem.
+\DefineJournalException{NASA Technical Memorandum}{NASA Tech.\ Memo.}
+\DefineJournalException{NASA Tech. Memo.}{NASA Tech.\ Memo.}
+% Proc.\ Camb.\ Phil.\ Soc.
+\DefineJournalException{Proceedings of the Cambridge Philosophical Society}{Proc.\ Camb.\ Philos.\ Soc.}
+\DefineJournalException{Proc. Camb. Philos. Soc.}{Proc.\ Camb.\ Philos.\ Soc.}
+% J.~Engng Maths
+\DefineJournalException{Journal of Engineering Mathematics}{J.~Eng. Math.}
+\DefineJournalException{J. Eng. Math.}{J.~Eng. Math.}
+
+% To fix:
+\DefineJournalException{AIAA Paper 2004-2335}{AIAA Paper 2004-2335}
+\DefineJournalException{AIAA Paper 2007-1314}{AIAA Paper 2007-1314}
+
+
+
+
+
+
+
+
+
+
+
