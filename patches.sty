@@ -1,0 +1,61 @@
+% Addition of several patches
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{patches}
+
+% hyperref for links
+\usepackage[breaklinks=true,dvipdfm,colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue,hypertexnames=false]{hyperref}
+
+% jabbrv for journal abbreviations
+% Remove ``[warnundef]'' to get rid of undefined abbreviation warnings:
+\usepackage[warnundef]{jabbrv} % Use jfm_jabbrv.bst in \bibliographystyle instead of jfm.bst
+% Additional list to prevent the warning of non-abbreviated journal title words, or for custom abbreviations
+% Added here so that the package jabbrv.sty can be updated from GitHub: https://github.com/compholio/jabbrv
+\makeatletter
+\InputIfFileExists{jabbrv-jfm.ldf}{}{%
+	\@latex@error{Abbreviation language `jabbrv-jfm.ldf' not found}{Select a valid language and recompile.}%
+}
+\makeatother
+
+\graphicspath{{Figures/}} % To store figures in a subfolder to be more clear
+\usepackage{siunitx} % https://www.dpg-physik.de/dpg/gliederung/junge/rg/wuerzburg/Archiv/WS%202011-12/LaTeX/siunitx.pdf
+\usepackage[all]{hypcap} % To get links to figures and not its caption
+\usepackage{dcolumn}   % Aligning columns on a decimal point
+\usepackage{latexsym}
+\usepackage[utf8]{inputenc} % For French characters
+\usepackage[T1]{fontenc} % For French characters
+\usepackage{comment} % To comment some large sections
+
+% Patches for natbib.sty, version 2010/09/13 8.31b
+% To show the hyperlink only on the year in the text, as in the published version of the articles
+% https://tex.stackexchange.com/questions/23227/how-to-hyperlink-only-the-year-part-when-using-natbib-and-hyperref
+\usepackage{natbib} % Must be added before the patches, otherwise the jfm.cls over-writes the patch
+\usepackage{etoolbox}
+
+\makeatletter
+
+% Patch case where name and year are separated by aysep
+\patchcmd{\NAT@citex}
+  {\@citea\NAT@hyper@{%
+     \NAT@nmfmt{\NAT@nm}%
+     \hyper@natlinkbreak{\NAT@aysep\NAT@spacechar}{\@citeb\@extra@b@citeb}%
+     \NAT@date}}
+  {\@citea\NAT@nmfmt{\NAT@nm}%
+   \NAT@aysep\NAT@spacechar\NAT@hyper@{\NAT@date}}{}{}
+
+% Patch case where name and year are separated by opening bracket
+\patchcmd{\NAT@citex}
+  {\@citea\NAT@hyper@{%
+     \NAT@nmfmt{\NAT@nm}%
+     \hyper@natlinkbreak{\NAT@spacechar\NAT@@open\if*#1*\else#1\NAT@spacechar\fi}%
+       {\@citeb\@extra@b@citeb}%
+     \NAT@date}}
+  {\@citea\NAT@nmfmt{\NAT@nm}%
+   \NAT@spacechar\NAT@@open\if*#1*\else#1\NAT@spacechar\fi\NAT@hyper@{\NAT@date}}
+  {}{}
+
+\makeatother
+
+
+
+\endinput
+
