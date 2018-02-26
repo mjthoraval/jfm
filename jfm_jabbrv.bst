@@ -5,12 +5,13 @@
 % https://tex.stackexchange.com/questions/26575/bibtex-how-can-i-automatically-reduce-long-author-lists-to-xxx-et-al
 % Fixed the case of ``others'' used in authors list, by adding \au{others}
 % Compare with original unsrt.bst: http://ftp.cs.stanford.edu/tex/bibtex/unsrt.bst
-% https://text-compare.com/
+% https://text-compare.com/ or https://www.diffchecker.com/
 % Added the journal abbreviations: http://www.compholio.com/latex/jabbrv/
 % https://github.com/compholio/jabbrv
 % https://tex.stackexchange.com/questions/33441/how-to-abbreviate-journal-name-in-citation
 % Do not add arXiv if the paper is published: FUNCTION {format.eprint}
 % Removed empty ', ,' when empty series for FUNCTION {format.bvolume}
+% Add DOI links: http://tex.stackexchange.com/questions/3802/how-to-get-doi-links-in-bibliography
 
 %% v1.0 (SGLS) 12/97
 % Stefan Llewellyn Smith, sgls1@damtp.cam.ac.uk
@@ -75,8 +76,10 @@ ENTRY
      author
      booktitle
      chapter
+     doi
      edition
      editor
+     eprint
      howpublished
      institution
      journal
@@ -91,9 +94,9 @@ ENTRY
      series
      title
      type
+     url
      volume
      year
-     eprint
    }
    {}
    { label extra.label sort.label short.list }
@@ -938,6 +941,39 @@ FUNCTION {format.pages}
    if$
 }
 
+% Select only the first url
+% Doesn't work if the first url contains a white space
+% http://tex.stackexchange.com/questions/28102/use-character-substitution-in-bibtex-bst-file
+STRINGS{text}
+FUNCTION{format.url}
+{ 'text :=
+  ""
+  { text empty$ not
+    text #1 #1 substring$ " " = not
+    and}
+  { text #1 #1 substring$ *
+    text #2 global.max$ substring$ 'text :=
+  }
+  while$
+}
+
+% Add DOI: Modified from the link below to include the url if there is no DOI
+% https://tex.stackexchange.com/questions/3802/how-to-get-doi-links-in-bibliography
+FUNCTION {hyperlink}
+{ duplicate$ empty$
+  { pop$ "" }
+  { doi empty$
+    { url empty$
+      { skip$ }
+      { "\href{" url format.url * "}{" * swap$ * "}" * }
+      if$
+    }
+    { "\href{https://doi.org/" doi * "}{" * swap$ * "}" * }
+    if$
+  }
+  if$
+}
+
 FUNCTION {format.journal.pages}
 {
    pages empty$
@@ -965,6 +1001,7 @@ FUNCTION {format.vol.num.pages}
      }
    if$
    format.journal.pages
+   hyperlink
 }
 
 FUNCTION {format.chapter.pages}
@@ -1225,11 +1262,13 @@ FUNCTION {incollection}
        format.number.series output
 %      format.edition output
        format.chapter.pages output
-   new.sentence
+       hyperlink
+       new.sentence
        format.publisher
      }
      { format.incoll.inproc.crossref output.nonnull
        format.chapter.pages output
+       hyperlink
      }
    if$
    format.note output
@@ -1250,7 +1289,8 @@ FUNCTION {inproceedings}
        format.bvolume output
        format.number.series output
        format.pages output
-    new.sentence
+       hyperlink
+       new.sentence
        publisher empty$
          { organization output
            address output
@@ -1262,6 +1302,7 @@ FUNCTION {inproceedings}
      }
      { format.incoll.inproc.crossref output.nonnull
        format.pages output
+       hyperlink
      }
    if$
    format.note output

@@ -12,6 +12,8 @@
 % Copyright (C) 1996, 1997, 2014 Cambridge University Press
 
 \documentclass{jfm}
+\usepackage{patch-natbib}
+\usepackage[breaklinks=true,dvipdfm,colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue,hypertexnames=false]{hyperref}
 \usepackage{graphicx}
 % Modifications
 % Remove ``[warnundef]'' to get rid of undefined abbreviation warnings:
@@ -19,7 +21,6 @@
 \graphicspath{{Figures/}} % To store figures in a subfolder to be more clear
 \usepackage{epstopdf, epsfig}
 \usepackage{siunitx} % https://www.dpg-physik.de/dpg/gliederung/junge/rg/wuerzburg/Archiv/WS%202011-12/LaTeX/siunitx.pdf
-\usepackage[breaklinks=true,dvipdfm,colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue,hypertexnames=false]{hyperref}
 \usepackage[all]{hypcap} % To get links to figures and not its caption
 \usepackage{dcolumn}   % Aligning columns on a decimal point
 \usepackage{latexsym}
@@ -44,6 +45,9 @@
 Somewhere, IN 12345, USA
 \aff{2}Department of Aerospace and Mechanical Engineering, University of
 Camford, Academic Street, Camford CF3 5QL, UK}
+
+\listfiles
+
 
 \begin{document}
 
@@ -79,9 +83,13 @@ mostly in the new BibTeX style file \verb|jfm_jabbrv.bst|:
 	\item Do not add arXiv if the paper is published: \verb|FUNCTION {format.eprint}|.
 	\item Removed empty ', ,' when empty series for \verb|FUNCTION {format.bvolume}|.
 	\item Added the package \verb|hyperref| to link references.
+	\item Added hyperlinks in the references section. It chooses the DOI first, and then the URL if there is no DOI.
+	No link is added if neither of them is provided in the bibtex file.
+	A complete bibtex entry can be generated from Mendeley for example, as for the reference \citep{Thoraval2012}.
+	\item Added a patch of natbib to show the hyperlink only on the year in the text, as in the published version of the articles
+	% https://tex.stackexchange.com/questions/23227/how-to-hyperlink-only-the-year-part-when-using-natbib-and-hyperref
+	\item Updated natbib.sty to \verb|[2010/09/13 8.31b (PWD, AO)]| to use the patch above
 \end{itemize}
-
-Test of a BibTeX entry copied from Mendeley with special characters \citep{Thoraval2012}.
 
 \section{How to submit to the \textbf{\textit{Journal of Fluid Mechanics}}}
 Authors must submit using the online submission and peer review system, Scholar One Manuscripts (formerly Manuscript Central) at http://mc.manuscriptcentral.com/jfm. If visiting the site for the first time, users must create a new account by clicking on `register here'. Once logged in, authors should click on the `Corresponding Author Centre', from which point a new manuscript can be submitted, with step-by-step instructions provided. Authors must at this stage specify whether the submission is a standard paper, or a {\it JFM Rapids} paper (see \S\ref{sec:filetypes} for more details). In addition, authors must specify an editor to whom the paper will be submitted from the drop-down list provided. Note that all editors exclusively deal with either standard papers or {\it JFM Rapids} (clearly indicated on the list), so please ensure that you choose an editor accordingly. Corresponding authors must provide a valid ORCID ID in order to submit a manuscript, either by linking an existing ORCID profile to your ScholarOne account or by creating a new ORCID profile. Once your submission is completed you will receive an email confirmation.  Book reviews should not be submitted via the online submission site and should instead be submitted by email to \verb|c.p.caulfield@damtp.cam.ac.uk|.
